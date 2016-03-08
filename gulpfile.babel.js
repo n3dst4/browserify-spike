@@ -8,10 +8,12 @@ import uglify from "gulp-uglify"
 import watchify from "watchify"
 import gutil from "gulp-util"
 import path from "path"
+import gulpIf from "gulp-if";
 
 const _outFolder   = "__build"
 const _inFile = "src/project.js"
 const _outFile = "project.js"
+const production = process.env.NODE_ENV === "production";
 
 gulp.task("default", ["html", "bundle"])
 
@@ -24,18 +26,18 @@ gulp.task("html", function () {
 function bundleTask (inFile, outFile, outFolder, watch) {
 
   const bundler = (watch ? watchify : (x) => x)(
-    browserify({debug: true}).add(inFile).plugin(babelify)
+    browserify({debug: !production}).add(inFile).plugin(babelify)
   )
 
   function bundle () {
     return bundler.bundle()
                   .pipe(source(outFile))
                   .pipe(buffer())
-                  .pipe(sourcemaps.init({loadMaps: true}))
-                  .pipe(uglify())
+                  .pipe(gulpIf(!production, sourcemaps.init({loadMaps: true})))
+                  .pipe(gulpIf(production, uglify()))
                   // write sourcemaps inline to prevent bug in Chrome
                   // https://bugs.chromium.org/p/chromium/issues/detail?id=508270
-                  .pipe(sourcemaps.write())
+                  .pipe(gulpIf(!production, sourcemaps.write()))
                   .pipe(gulp.dest(outFolder));
   }
 
