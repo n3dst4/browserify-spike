@@ -23,9 +23,9 @@ This a playground to test various interactions with browserify, precompiled modu
 
 ## notes
 
-so browserify doesn't seem to pick up on module sourcemaps unless they are inline? **Solution - generate module source maps inline**
+So browserify doesn't seem to pick up on module sourcemaps unless they are inline? **Solution - generate module source maps inline** Possibly connected to [this browserify bug](https://github.com/substack/node-browserify/issues/772).
 
-also chrome seems to have an issue with caching sourcemaps sometimes. again, inlining them fixes it.
+Also chrome seems to have an issue with caching sourcemaps sometimes. again, inlining them fixes it. **Solution - generate main source maps inline** 
 
 ## TODO
 

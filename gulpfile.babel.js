@@ -22,8 +22,7 @@ gulp.task("html", function () {
 gulp.task("bundle", function() {
 
   var bundler = browserify({
-    debug: true,
-    standalone : projectName
+    debug: true
   })
 
   return bundler.add(inFile)
