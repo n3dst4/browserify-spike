@@ -31,3 +31,4 @@ also chrome seems to have an issue with caching sourcemaps sometimes. again, inl
 
 Firefox - sources don't show as a tree view
 watchify
+production build
