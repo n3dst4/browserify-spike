@@ -25,10 +25,13 @@ This a playground to test various interactions with browserify, precompiled modu
 
 So browserify doesn't seem to pick up on module sourcemaps unless they are inline? **Solution - generate module source maps inline** Possibly connected to [this browserify bug](https://github.com/substack/node-browserify/issues/772).
 
-Also chrome seems to have an issue with caching sourcemaps sometimes. again, inlining them fixes it. **Solution - generate main source maps inline** 
+Also chrome seems to have an issue with caching sourcemaps sometimes. again, inlining them fixes it. **Solution - generate main source maps inline**
 
 ## TODO
 
 Firefox - sources don't show as a tree view
 watchify
 production build
+notifier
+error handling when watching
+browser-sync

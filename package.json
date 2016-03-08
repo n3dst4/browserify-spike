@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp",
-    "start": "http-server __build"
+    "start": "gulp watch"
   },
   "author": "Neil de Carteret <git@lumphammer.com>",
   "license": "ISC",
@@ -20,8 +20,10 @@
     "gulp": "^3.9.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.2",
+    "gulp-util": "^3.0.7",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
   },
   "eslintConfig": {
     "extends": "@n3dst4/eslint-config-n3dst4"
