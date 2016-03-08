@@ -13,7 +13,7 @@ import gulpIf from "gulp-if";
 const _outFolder   = "__build"
 const _inFile = "src/project.js"
 const _outFile = "project.js"
-const production = process.env.NODE_ENV === "production";
+const _production = process.env.NODE_ENV === "production";
 
 gulp.task("default", ["html", "bundle"])
 
@@ -22,22 +22,21 @@ gulp.task("html", function () {
   gulp.src("html/index.html").pipe(gulp.dest(_outFolder))
 })
 
+function bundleTask (inFile, outFile, outFolder, opts = {watch: false, production: false}) {
 
-function bundleTask (inFile, outFile, outFolder, watch) {
-
-  const bundler = (watch ? watchify : (x) => x)(
-    browserify({debug: !production}).add(inFile).plugin(babelify)
+  const bundler = (opts.watch ? watchify : (x) => x)(
+    browserify({debug: !opts.production}).add(inFile).plugin(babelify)
   )
 
   function bundle () {
     return bundler.bundle()
                   .pipe(source(outFile))
                   .pipe(buffer())
-                  .pipe(gulpIf(!production, sourcemaps.init({loadMaps: true})))
-                  .pipe(gulpIf(production, uglify()))
+                  .pipe(gulpIf(!opts.production, sourcemaps.init({loadMaps: true})))
+                  .pipe(gulpIf(opts.production, uglify()))
                   // write sourcemaps inline to prevent bug in Chrome
                   // https://bugs.chromium.org/p/chromium/issues/detail?id=508270
-                  .pipe(gulpIf(!production, sourcemaps.write()))
+                  .pipe(gulpIf(!opts.production, sourcemaps.write()))
                   .pipe(gulp.dest(outFolder));
   }
 
@@ -60,9 +59,9 @@ function bundleTask (inFile, outFile, outFolder, watch) {
 
 
 gulp.task("bundle", function() {
-  return bundleTask(_inFile, _outFile, _outFolder)
+  return bundleTask(_inFile, _outFile, _outFolder, {production: _production})
 });
 
 gulp.task("watch", ["bundle"], function() {
-  return bundleTask(_inFile, _outFile, _outFolder, true)
+  return bundleTask(_inFile, _outFile, _outFolder, {production: _production, watch: true})
 });
