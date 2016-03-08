@@ -9,20 +9,19 @@ import watchify from "watchify"
 import gutil from "gulp-util"
 import path from "path"
 
-const projectName = "project"
-const outputFolder   = "__build"
-const inFile = "src/project.js"
-const outFile = projectName + ".js"
+const _outFolder   = "__build"
+const _inFile = "src/project.js"
+const _outFile = "project.js"
 
 gulp.task("default", ["html", "bundle"])
 
 
 gulp.task("html", function () {
-  gulp.src("html/index.html").pipe(gulp.dest(outputFolder))
+  gulp.src("html/index.html").pipe(gulp.dest(_outFolder))
 })
 
 
-function bundleTask (watch) {
+function bundleTask (inFile, outFile, outFolder, watch) {
 
   const bundler = (watch ? watchify : (x) => x)(
     browserify({debug: true}).add(inFile).plugin(babelify)
@@ -37,7 +36,7 @@ function bundleTask (watch) {
                   // write sourcemaps inline to prevent bug in Chrome
                   // https://bugs.chromium.org/p/chromium/issues/detail?id=508270
                   .pipe(sourcemaps.write())
-                  .pipe(gulp.dest(outputFolder));
+                  .pipe(gulp.dest(outFolder));
   }
 
   bundler.on("update", function (ids) {
@@ -59,9 +58,9 @@ function bundleTask (watch) {
 
 
 gulp.task("bundle", function() {
-  return bundleTask()
+  return bundleTask(_inFile, _outFile, _outFolder)
 });
 
 gulp.task("watch", ["bundle"], function() {
-  return bundleTask(true)
+  return bundleTask(_inFile, _outFile, _outFolder, true)
 });
