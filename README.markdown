@@ -23,6 +23,14 @@ This a playground to test various interactions with browserify, precompiled modu
 13. Specifically, you should be able to see **node_modules/external/src/external.js** in there, alongside other files.
 
 
+## notes
+
+so browserify doesn't seem to pick up on module sourcemaps unless they are inline?
+
+also chrome seems to have an issue with caching sourcemaps sometimes. again, inlining them fixes it.
+
 ## TODO
 
 Firefox - sources don't show as a tree view
+watchify
+uglify

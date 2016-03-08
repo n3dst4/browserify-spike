@@ -5,7 +5,7 @@ var source = require("vinyl-source-stream")
 var buffer = require("vinyl-buffer")
 //var path = require("path")
 var sourcemaps  = require("gulp-sourcemaps")
-//var uglify = require("gulp-uglify")
+var uglify = require("gulp-uglify")
 
 var projectName = "project"
 var outputFolder   = "__build"
@@ -33,7 +33,8 @@ gulp.task("bundle", function() {
                 .pipe(source(outFile))
                 .pipe(buffer())
                 .pipe(sourcemaps.init({loadMaps: true}))
-                // .pipe(uglify())
-                .pipe(sourcemaps.write('./'))
+                .pipe(uglify())
+                //.pipe(sourcemaps.write('./')) // external
+                .pipe(sourcemaps.write()) // inline
                 .pipe(gulp.dest(outputFolder));
 });
