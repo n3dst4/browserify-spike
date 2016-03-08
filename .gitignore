@@ -25,9 +25,8 @@ build/Release
 
 # Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
-external/node_modules/**
-project/node_modules/**
-!project/node_modules/external
+node_modules/**
+!node_modules/external
 
 # Optional npm cache directory
 .npm
