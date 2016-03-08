@@ -4,7 +4,7 @@ This a playground to test various interactions with browserify, precompiled modu
 
 `project` is a pretend browserified SPA.
 
-`external` is a pretend 3rd-party module which might have been installed from npm.
+`external` is a pretend 3rd-party module which might have been installed from npm. There's a funcky .gitignore setup to allow us to put `external` in the `node_modules` folder and check it into git while leaving everything else to be installed by npm as normal.
 
 ## setup
 
@@ -20,7 +20,6 @@ This a playground to test various interactions with browserify, precompiled modu
 10. Go to the "sources" or "debug" tab.
 11. You should be able to see a whole buncha source-mapped files.
 12. Specifically, you should be able to see **node_modules/external/src/external.js** in there, alongside other files.
-
 
 ## notes
 
