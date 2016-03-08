@@ -1,0 +1,7 @@
+{
+  "generator-n3dst4-package": {
+    "babel": true,
+    "name": "project",
+    "browser": true
+  }
+}
