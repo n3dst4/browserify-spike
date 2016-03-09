@@ -6,6 +6,7 @@ import vinylBuffer from "vinyl-buffer"
 import sourcemaps from "gulp-sourcemaps"
 import uglify from "gulp-uglify"
 import watchify from "watchify"
+import errorify from "errorify"
 import gutil from "gulp-util"
 import gulpIf from "gulp-if"
 import path from "path"
@@ -26,6 +27,7 @@ export default function bundleTask (inFile, outFile, outFolder,
 
     if (opts.watch) {
       bundler = bundler.plugin(watchify)
+      bundler = bundler.plugin(errorify)
     }
 
     function bundle () {

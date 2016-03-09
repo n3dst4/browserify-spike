@@ -17,6 +17,7 @@
     "babel-register": "^6.6.5",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
+    "errorify": "^0.3.1",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
