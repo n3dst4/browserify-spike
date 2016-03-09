@@ -30,7 +30,4 @@ Also chrome seems to have an issue with caching sourcemaps sometimes. again, inl
 ## TODO
 
 Firefox - sources don't show as a tree view
-notifier
-error handling when watching
 browser-sync
-errorify

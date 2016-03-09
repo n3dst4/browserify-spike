@@ -10,7 +10,6 @@ import errorify from "errorify"
 import gutil from "gulp-util"
 import gulpIf from "gulp-if"
 import path from "path"
-//import notifier from "node-notifier"
 
 // bundleTask returns a function which is suitable for use as a gulp task
 export default function bundleTask (inFile, outFile, outFolder,
@@ -30,6 +29,8 @@ export default function bundleTask (inFile, outFile, outFolder,
       bundler = bundler.plugin(errorify)
     }
 
+    // bundle() is where we actuall call bundler.bundle() and pipe the results
+    // into gulp streams
     function bundle () {
       return bundler.bundle()
         .on("error", function (err) {
@@ -47,6 +48,7 @@ export default function bundleTask (inFile, outFile, outFolder,
         .pipe(gulp.dest(outFolder));
     }
 
+    // when a change is detected, log changes and call bundle again
     bundler.on("update", function (ids) {
       gutil.log("Script dependencies updated:");
       ids = ids.map(function (id) {
@@ -56,10 +58,12 @@ export default function bundleTask (inFile, outFile, outFolder,
       bundle();
     })
 
+    // the log event is fired by watchify with time and size info
     bundler.on("log", function (msg) {
       gutil.log(msg);
     })
 
+    // call bundle() once to kick off
     return bundle()
   }
 }
