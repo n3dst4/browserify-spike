@@ -15,9 +15,18 @@ import path from "path"
 export default function bundleTask (inFile, outFile, outFolder,
     opts = {watch: false, production: false}) {
   return function () {
-    const bundler = (opts.watch ? watchify : (x) => x)(
-      browserify({debug: !opts.production}).add(inFile).plugin(babelify)
-    )
+    let bundler =
+      browserify({
+        entries: [inFile],
+        debug: !opts.production,
+        cache: {},
+        packageCache: {},
+        plugin: [babelify]
+      })
+
+    if (opts.watch) {
+      bundler = bundler.plugin(watchify)
+    }
 
     function bundle () {
       return bundler.bundle()
@@ -43,6 +52,19 @@ export default function bundleTask (inFile, outFile, outFolder,
     bundler.on("log", function (msg) {
       gutil.log(msg);
     })
+
+    bundler.on("error", function (err) {
+      // thanks to http://stackoverflow.com/a/24817446/212676
+      console.error(err);
+      // if (notifier) {
+      //   notifier.notify({
+      //     'title': 'Kaboom! Gulp error:',
+      //     'message': err,
+      //     wait: false,
+      //   });
+      // }
+    })
+
 
     return bundle()
   }
