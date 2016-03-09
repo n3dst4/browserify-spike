@@ -1,14 +1,14 @@
 import gulp from "gulp"
 import browserify from "browserify"
 import babelify from 'babelify'
-import source from "vinyl-source-stream"
-import buffer from "vinyl-buffer"
+import vinylSource from "vinyl-source-stream"
+import vinylBuffer from "vinyl-buffer"
 import sourcemaps from "gulp-sourcemaps"
 import uglify from "gulp-uglify"
 import watchify from "watchify"
 import gutil from "gulp-util"
-import path from "path"
 import gulpIf from "gulp-if"
+import path from "path"
 //import notifier from "node-notifier"
 
 // bundleTask returns a function which is suitable for use as a gulp task
@@ -21,8 +21,8 @@ export default function bundleTask (inFile, outFile, outFolder,
 
     function bundle () {
       return bundler.bundle()
-      .pipe(source(outFile))
-      .pipe(buffer())
+      .pipe(vinylSource(outFile))
+      .pipe(vinylBuffer())
       .pipe(gulpIf(!opts.production, sourcemaps.init({loadMaps: true})))
       .pipe(gulpIf(opts.production, uglify()))
       // write sourcemaps inline to prevent bug in Chrome
