@@ -33,3 +33,4 @@ Firefox - sources don't show as a tree view
 notifier
 error handling when watching
 browser-sync
+errorify

@@ -15,5 +15,5 @@ gulp.task("html", function () {
 gulp.task("bundle",
   bundleTask(_inFile, _outFile, _outFolder, {production: _production}));
 
-gulp.task("watch", ["bundle"],
+gulp.task("watch",
   bundleTask(_inFile, _outFile, _outFolder, {production: _production, watch: true}));

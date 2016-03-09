@@ -30,14 +30,19 @@ export default function bundleTask (inFile, outFile, outFolder,
 
     function bundle () {
       return bundler.bundle()
-      .pipe(vinylSource(outFile))
-      .pipe(vinylBuffer())
-      .pipe(gulpIf(!opts.production, sourcemaps.init({loadMaps: true})))
-      .pipe(gulpIf(opts.production, uglify()))
-      // write sourcemaps inline to prevent bug in Chrome
-      // https://bugs.chromium.org/p/chromium/issues/detail?id=508270
-      .pipe(gulpIf(!opts.production, sourcemaps.write()))
-      .pipe(gulp.dest(outFolder));
+        .on("error", function (err) {
+          // thanks to http://stackoverflow.com/a/24817446/212676
+          console.error(err);
+          this.emit("end");
+        })
+        .pipe(vinylSource(outFile))
+        .pipe(vinylBuffer())
+        .pipe(gulpIf(!opts.production, sourcemaps.init({loadMaps: true})))
+        .pipe(gulpIf(opts.production, uglify()))
+        // write sourcemaps inline to prevent bug in Chrome
+        // https://bugs.chromium.org/p/chromium/issues/detail?id=508270
+        .pipe(gulpIf(!opts.production, sourcemaps.write()))
+        .pipe(gulp.dest(outFolder));
     }
 
     bundler.on("update", function (ids) {
@@ -52,19 +57,6 @@ export default function bundleTask (inFile, outFile, outFolder,
     bundler.on("log", function (msg) {
       gutil.log(msg);
     })
-
-    bundler.on("error", function (err) {
-      // thanks to http://stackoverflow.com/a/24817446/212676
-      console.error(err);
-      // if (notifier) {
-      //   notifier.notify({
-      //     'title': 'Kaboom! Gulp error:',
-      //     'message': err,
-      //     wait: false,
-      //   });
-      // }
-    })
-
 
     return bundle()
   }
