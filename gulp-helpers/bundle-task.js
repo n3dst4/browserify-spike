@@ -1,4 +1,3 @@
-import gulp from "gulp"
 import browserify from "browserify"
 import babelify from 'babelify'
 import vinylSource from "vinyl-source-stream"
@@ -10,6 +9,7 @@ import errorify from "errorify"
 import gutil from "gulp-util"
 import gulpIf from "gulp-if"
 import path from "path"
+import vfs from "vinyl-fs"
 
 // bundleTask returns a function which is suitable for use as a gulp task
 export default function bundleTask (inFile, outFile, outFolder,
@@ -45,7 +45,7 @@ export default function bundleTask (inFile, outFile, outFolder,
         // write sourcemaps inline to prevent bug in Chrome
         // https://bugs.chromium.org/p/chromium/issues/detail?id=508270
         .pipe(gulpIf(!opts.production, sourcemaps.write()))
-        .pipe(gulp.dest(outFolder));
+        .pipe(vfs.dest(outFolder));
     }
 
     // when a change is detected, log changes and call bundle again
